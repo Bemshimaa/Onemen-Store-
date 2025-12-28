@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@200..700&display=swap");
+@import "tailwindcss";
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+body {
+  background: white;
+  font-family: 'Bebas neue', 'sans-serif';
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
