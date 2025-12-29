@@ -14,7 +14,7 @@ export default function Bestseller() {
         <h1 className="text-[3rem] text-center">BESTSELLERS</h1>
         <Link to = "/Products"><Button>SEE ALL</Button></Link>
       </div>
-      <div className="Productcard grid grid-cols-4">
+      <div className="Productcard grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
         <Card id={1} image={ProductImg1} name="Red & White tee" price="N27,000"></Card>
         <Card
           id={2}

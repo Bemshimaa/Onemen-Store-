@@ -3,11 +3,11 @@ import Button from './button'
 import {Link} from 'react-router-dom'
 export default function Hero(){
     return(
-        <section className="hero flex flex-row relative h-[600px]">
-           <img src={heroImage} alt="Hero-image" />
+        <section className="hero relative md:h-[600px] h-[50vh]">
+           <img src={heroImage} alt="Hero-image" className='absolute inset-0 h-full'/>
 
-           <div className='hero-text absolute w-1/2 z-50  top-30 left-150 flex flex-col justify-center items-center'>
-             <h1 className='text-[8rem] leading-none text-center'>STREET STYLE UNLEASHED</h1>
+           <div className='hero-text absolute top-[22%] right-[0.5%] md:top-[22%] md:right-[0.5%] flex flex-col items-center w-1/2 h-full z-10'>
+             <h1 className='text-2xl md:text-8xl leading-none text-center'>STREET STYLE UNLEASHED</h1>
 
              <Link to = "/Products"><Button variant = "black">SHOP NOW</Button></Link>
            </div>
