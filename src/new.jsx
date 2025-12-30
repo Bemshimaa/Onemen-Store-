@@ -2,16 +2,16 @@ import NewImage from "./assets/IMAGES/New-In-img.jpg";
 import Button from "./button";
 export default function New() {
   return (
-    <section className="w-full h-[500px] mt-[2rem] relative">
+    <section className="w-full md:h-[500px] h-[350px] relative">
       <img
         className="w-full h-full object-cover object-[center_40%]"
         src={NewImage}
         alt="new collection"
       />
-      <div className="absolute top-[150px] right-1/4 flex flex-col items-center gap-1">
-        <h1 className="text-[7rem] leading-none">NEW IN</h1>
-        <p>Shop From our latest release - INAGI</p>
-        <Button>SHOP NOW</Button>
+      <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 md:top-[150px] md:right-1/4 flex flex-col items-center gap-1 text-white text-center">
+        <h1 className="md:text-[5rem] text-[2rem] leading-none">NEW IN</h1>
+        <p className="text-[0.8rem] sm:text-[0.9rem]">Shop From our latest release - INAGI</p>
+        <Button variant="white" className="py-1 px-2 md:py-3 md:px-4">SHOP NOW</Button>
       </div>
     </section>
   );

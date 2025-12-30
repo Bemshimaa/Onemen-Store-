@@ -10,9 +10,9 @@ import ProductImg4 from "./assets/IMAGES/Product-card-4.jpg";
 export default function Bestseller() {
   return (
     <section className="bestseller">
-      <div className="flex flex-row justify-between items-center p-4">
-        <h1 className="text-[3rem] text-center">BESTSELLERS</h1>
-        <Link to = "/Products"><Button>SEE ALL</Button></Link>
+      <div className="flex flex-row justify-between items-center p-4 bg-black">
+        <h1 className="md:text-[3rem] text-[2rem] text-center text-white">BESTSELLERS</h1>
+        <Link to = "/Products"><Button className="py-1 px-2 md:py-3 md:px-4" variant="white">SEE ALL</Button></Link>
       </div>
       <div className="Productcard grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
         <Card id={1} image={ProductImg1} name="Red & White tee" price="N27,000"></Card>

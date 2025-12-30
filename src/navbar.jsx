@@ -7,7 +7,7 @@ export default function MyNav() {
 
   const cartCount = useSelector((state) => state.cart.items.length);
   return (
-    <nav className="navbar py-5 absolute w-full z-50">
+    <nav className="navbar py-5 px-3 absolute w-full z-50">
       <Container className="flex flex-row justify-between items-center">
         <div className="logo">
           <a className="text-[1.5rem]" href="">
