@@ -12,10 +12,11 @@ import Cart from "./cart";
 
 export default function Myapp() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <MyNav></MyNav>
 
-      <Routes>
+      <main className="flex-grow">
+        <Routes>
         <Route
           path="/"
           element={
@@ -34,8 +35,9 @@ export default function Myapp() {
         
         <Route path="/cart" element={<Cart/>}></Route>
       </Routes>
+      </main>
 
       <Footer></Footer>
-    </>
+    </div>
   );
 }

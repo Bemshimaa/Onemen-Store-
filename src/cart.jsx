@@ -21,13 +21,14 @@ export default function Cart() {
   }
   return (
 
-    <section className="grid grid-cols-2 pt-20">
-      <div className="border border-500-green p-4 ">
+    <section className="pt-20">
+      <div className="grid md:grid-cols-2 max-w-[1100px] mx-auto p-3">
+        <div className="border border-black-500 p-4 ">
         <h1 className="text-[1.6rem]">Cart</h1>
         <div className="flex flex-col gap-4">
           {
             cartProducts.map((item) => (
-              <div key={item.id}>
+              <div className="border-t border-black-500 pt-2" key={item.id}>
                 <div className="flex flex-row gap-4">
                   <img className="w-42 h-42" src={item.image} alt={item.name} />
                   <div>
@@ -44,7 +45,7 @@ export default function Cart() {
         </div>
         
       </div>
-      <div className="bg-black text-white border border-blue-500 p-4 flex flex-col items-start gap-2 text-[1.2rem]">
+      <div className="bg-black text-white p-4 flex flex-col items-start gap-2 text-[1.2rem] border border-white-500 ">
         <h1 className="text-[1.6rem]">Summary</h1>
         <Accordion title="Do you have a promo code?">
           <form action="" className="flex flex-row items-center gap-3 py-2">
@@ -62,6 +63,7 @@ export default function Cart() {
         <Button className="py-2 px-4" variant="white">
           Checkout
         </Button>
+      </div>
       </div>
     </section>
   );

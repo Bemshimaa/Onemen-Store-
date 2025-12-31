@@ -9,10 +9,12 @@ export default function Products (){
 
     return(
         <section>
-            <div className="bg-black h-[250px] relative text-white">
-                <h1 className="absolute leading-none text-[4rem] opacity-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 ">ONEMEN PRODUCTS LINEUP</h1>
+            <div className="lg:h-[40px] sm:h-[15px] md:h-[30px]"></div>
+            <div className="bg-white h-[200px] relative text-black">
+                <h1 className="absolute leading-none text-[4rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] opacity-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">PRODUCTS LINEUP</h1>
             </div>
-           <div className="grid grid-cols-4">
+           <div className="max-w-[1440px] mx-auto lg:px-3 px-4">
+            <div className="grid lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-2 grid-cols-1">
              {
                 productList.map((product) => (
                 <Card 
@@ -24,6 +26,7 @@ export default function Products (){
                 description = {product.description}>
                 </Card>
             ))}
+           </div>
            </div>
             
         </section>

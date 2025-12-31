@@ -31,7 +31,7 @@ export const productList = [
   },
   {
     id: 4,
-    name: "Onemen Receipt Tee",
+    name: "Receipt Tee",
     price: "N27,000",
     image: ProductImg4,
     description: "Rep ONEMEN in a vintage-inspired top. Dropped shoulders and a baggy fit keep it relaxed and casual, while heavyweight cotton fabric adds a structured feel.",

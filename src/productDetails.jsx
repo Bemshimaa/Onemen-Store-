@@ -40,15 +40,16 @@ export default function ProductPage() {
   const Sizes = ["S", "M", "L", "XL"];
 
   return (
-    <section className="pt-30 grid grid-cols-2 items-start gap-3">
-      <div className="">
+    <section className="pt-30 ">
+      <div className="grid sm:grid-cols-2 items-start gap-3 p-3 max-w-[1100px] mx-auto ">
+        <div className="border border-black-500">
         <img
           className="w-full h-full object-cover"
           src={result.image}
           alt={result.name}
         />
       </div>
-      <div className="pl-7 flex flex-col flex-start justify-center gap-6">
+      <div className="md:pl-7 p-3 flex flex-col flex-start justify-center gap-6 border border-black-500">
         <h1 className="text-[3rem]">{result.name}</h1>
         <p className="text-[1.2rem]">{result.description}</p>
         <p className="block w-1/2 flex justify-between text-[1.2rem]">
@@ -90,6 +91,7 @@ export default function ProductPage() {
             </p>
           </Accordion>
         </div>
+      </div>
       </div>
     </section>
   );

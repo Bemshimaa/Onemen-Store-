@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import Container from "./container";
 
 export default function MyNav() {
   const [isOpen, setIsOpen] = useState(false);
 
   const cartCount = useSelector((state) => state.cart.items.length);
   return (
-    <nav className="navbar py-5 px-3 absolute w-full z-50">
+    <nav className="navbar py-5 px-5 absolute w-full z-50">
       <Container className="flex flex-row justify-between items-center">
         <div className="logo">
           <a className="text-[1.5rem]" href="">
@@ -71,8 +72,4 @@ export default function MyNav() {
   );
 }
 
-function Container({ children, className }) {
-  return (
-    <div className={`max-w-[1100px] mx-auto ${className}`}>{children}</div>
-  );
-}
+
