@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="">
           <h1 className="text-[2rem]">ONEMEN</h1>
           <p>ONEMEN: ONE OF NONE</p>
-          <a href="">
+          <a href="https://www.instagram.com/1men.directory/?hl=en" target="_blank" rel="noreferrer">
             <i className="fa-brands fa-instagram"></i>
           </a>
           <a href="">
