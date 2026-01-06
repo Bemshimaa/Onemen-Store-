@@ -1,11 +1,26 @@
+import React, {useState, useEffect} from "react";
 import Card from "./Productcard";
-import { productList } from "../src/data/products";
+
 
 
 
 
 export default function Products (){
-    
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try{
+            const response = await fetch('hhtp://localhost:5000/api/products');
+            const data = await response.json();
+            setProducts(data);
+            } catch (error){
+                console.log('Error fetching products', error);
+            }
+            
+        };
+        fetchProducts();
+    }, []);
 
     return(
         <section>
@@ -16,7 +31,7 @@ export default function Products (){
            <div className="max-w-[1440px] mx-auto lg:px-3 px-4">
             <div className="grid lg:grid-cols-4 xl:grid-cols-4 md:grid-cols-2 grid-cols-1">
              {
-                productList.map((product) => (
+                products.map((product) => (
                 <Card 
                 key={product.id}
                 id= {product.id}
