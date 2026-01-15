@@ -53,11 +53,28 @@ A modern e-commerce interface built for the revival of the Onemen fashion brand.
 5. Test product listing, details, and cart functionality
 6. Remove unused static data files after verification
 
-### Notes
-- MongoDB `_id` is a string, not sequential numbers
-- Ensure CORS is handled for frontend-backend communication
-- Update any hardcoded product references if any exist
-- Test image loading after migration
+---
+
+## **5-Day Sprint Roadmap**
+
+Day 1: Authentication (Backend)
+- User Model: Define schema.
+- Controller: register/auth.
+- JWT & Auth Middleware.
+
+Day 2: Authentication (Frontend)
+- Redux Auth Slice.
+- Login/Register Screens.
+
+Day 3: Order Logic (Backend)
+- Order Model & Controller.
+- Protected Routes.
+
+Day 4: Checkout Process (Frontend)
+- Shipping & Place Order Screens.
+
+Day 5: Payments (Paystack Integration)
+- `react-paystack` integration.
 
 ---
 Tech Stack:

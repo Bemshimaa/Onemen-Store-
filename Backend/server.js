@@ -1,16 +1,20 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const products = require('./data/products');
+// const products = require('./data/products'); // <-- remove this if using DB
 const cors = require('cors');
 const path = require('path');
-const connectDB = require('./config/db')
-const Product = require('./models/productModel'); // Import the Product model for DB operations
+const connectDB = require('./config/db');
+const Product = require('./models/productModel');
+const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
 connectDB();
 
 const app = express();
+
+app.use(cors());
+app.use(express.json()); // <-- ADD this so req.body is parsed for JSON payloads
 
 const PORT = process.env.PORT || 5000;
 app.use(cors());
@@ -43,6 +47,8 @@ app.get('/api/products/:id', async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+app.use('/api/users', userRoutes); // mount routes under /api/users so endpoints become /api/users/register and /api/users/login
 
 app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`)
