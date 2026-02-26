@@ -4,7 +4,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 
-dotenv.config({ path: path.join(__dirname, '.env') });
+dotenv.config();
 
 // Connect to MongoDB
 connectDB();
@@ -25,6 +25,12 @@ app.get('/', (req, res) => {
     res.send('OneMen Store API is running...');
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+// For local development
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
+
