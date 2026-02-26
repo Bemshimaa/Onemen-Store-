@@ -9,7 +9,7 @@ body {
   background: white;
   font-family: 'Bebas neue', 'sans-serif';
 }
-a {
+a, button {
   text-decoration: none;
   cursor: pointer;
 }
