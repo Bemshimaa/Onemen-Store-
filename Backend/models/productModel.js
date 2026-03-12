@@ -25,7 +25,7 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     price: {
-      type: String, // Or Number, depending on how you store "N27,000"
+      type: Number,
       required: true,
       default: 0,
     },

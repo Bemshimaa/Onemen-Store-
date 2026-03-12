@@ -6,6 +6,9 @@ const path = require('path');
 const connectDB = require('./config/db');
 const Product = require('./models/productModel');
 const userRoutes = require('./routes/userRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const couponRoutes = require('./routes/couponRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 dotenv.config();
 
@@ -13,11 +16,13 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+}));
 app.use(express.json()); // <-- ADD this so req.body is parsed for JSON payloads
 
 const PORT = process.env.PORT || 5000;
-app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -25,30 +30,10 @@ app.get('/', (req, res) => {
     res.send("API is Running...");
 });
 
-// Updated route to fetch products from MongoDB instead of static data
-app.get('/api/products', async (req, res) => {
-    try {
-        const products = await Product.find({}); // Fetch all products from DB
-        res.json(products);
-    } catch (err) {
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-
-// New route to fetch a single product by ID from MongoDB
-app.get('/api/products/:id', async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id); // Find product by MongoDB _id
-        if (product) {
-            return res.json(product);
-        }
-        res.status(404).json({ message: 'Product not found' });
-    } catch (err) {
-        res.status(500).json({ message: 'Server error' });
-    }
-});
-
-app.use('/api/users', userRoutes); // mount routes under /api/users so endpoints become /api/users/register and /api/users/login
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/coupons', couponRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on Port ${PORT}`)

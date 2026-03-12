@@ -1,9 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const savedCart = localStorage.getItem("cart")
+const savedShippingAddress = localStorage.getItem("shippingAddress")
+const savedCoupon = localStorage.getItem("coupon")
 
 const initialState = {
     items: savedCart ? JSON.parse(savedCart) : [],
+    shippingAddress: savedShippingAddress ? JSON.parse(savedShippingAddress) : {},
+    coupon: savedCoupon ? JSON.parse(savedCoupon) : null,
 };
 const cartSlice =  createSlice({
     name: 'cart',
@@ -34,7 +38,26 @@ const cartSlice =  createSlice({
             ITEMS.quantity -= 1;
         }
         localStorage.setItem("cart", JSON.stringify(state.items));
-    }} 
+    },
+    saveShippingAddress(state, action) {
+        state.shippingAddress = action.payload;
+        localStorage.setItem("shippingAddress", JSON.stringify(state.shippingAddress));
+    },
+    clearCart(state) {
+        state.items = [];
+        state.coupon = null;
+        localStorage.removeItem("cart");
+        localStorage.removeItem("coupon");
+    },
+    applyCoupon(state, action) {
+        state.coupon = action.payload;
+        localStorage.setItem("coupon", JSON.stringify(state.coupon));
+    },
+    removeCoupon(state) {
+        state.coupon = null;
+        localStorage.removeItem("coupon");
+    }
+} 
 })
-export const {addToCart, removeFromCart, increaseQuantity, decreaseQuantity} = cartSlice.actions;
+export const {addToCart, removeFromCart, increaseQuantity, decreaseQuantity, saveShippingAddress, clearCart, applyCoupon, removeCoupon} = cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,17 +1,34 @@
+import { useState, useEffect } from "react";
 import Card from "./Productcard";
 import Button from "./button";
 import { Link } from "react-router-dom";
 import Container from "./container";
-
-// Removed local image imports since we're using backend URLs now
+import axios from "axios";
 
 export default function Bestseller() {
+  const [bestsellers, setBestsellers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBestsellers = async () => {
+      try {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/bestsellers`);
+        setBestsellers(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching bestsellers:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchBestsellers();
+  }, []);
+
   return (
     <section className="bestseller">
-      
-        <div className="p-4 bg-black w-full">
-          <div className="flex flex-row justify-between items-center max-w-[1440px] mx-auto">
-            <h1 className="md:text-[3rem] text-[2rem] text-center text-white">
+      <div className="p-4 bg-black w-full">
+        <div className="flex flex-row justify-between items-center max-w-[1440px] mx-auto">
+          <h1 className="md:text-[3rem] text-[2rem] text-center text-white">
             BESTSELLERS
           </h1>
           <Link to="/Products">
@@ -19,37 +36,28 @@ export default function Bestseller() {
               SEE ALL
             </Button>
           </Link>
-          </div>
         </div>
-        <div className="max-w-[1440px] mx-auto px-2 md:px-3">
-          <div className="Productcard grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
-          <Card
-            id="696514f6c245334b11d681ea"  // MongoDB _id for Red & White tee
-            image="http://localhost:5000/images/product-card-1.jpg"  // Backend-served image URL
-            name="Red & White tee"
-            price="N27,000"
-          ></Card>
-          <Card
-            id="696514f6c245334b11d681eb"  // MongoDB _id for Short Sleeve Polo
-            image="http://localhost:5000/images/product-card-2.jpg"  // Backend-served image URL
-            name="Short Sleeve Polo"
-            price="N27,000"
-          ></Card>
-          <Card
-            id="696514f6c245334b11d681ec"  // MongoDB _id for Onemen Jersey
-            image="http://localhost:5000/images/product-card-3.jpg"  // Backend-served image URL
-            name="Onemen Jersey"
-            price="N27,000"
-          ></Card>
-          <Card
-            id="696514f6c245334b11d681ed"  // MongoDB _id for Receipt Tee
-            image="http://localhost:5000/images/product-card-4.jpg"  // Backend-served image URL
-            name="Receipt Tee"  // Updated to match DB name
-            price="N27,000"
-          ></Card>
+      </div>
+      <div className="max-w-[1440px] mx-auto px-2 md:px-3">
+        <div className="Productcard grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+          {loading ? (
+            <p className="text-white p-4">Loading bestsellers...</p>
+          ) : bestsellers.length > 0 ? (
+            bestsellers.map((product) => (
+              <Card
+                key={product._id}
+                id={product._id}
+                image={product.image}
+                name={product.name}
+                price={product.price}
+                countInStock={product.countInStock}
+              />
+            ))
+          ) : (
+            <p className="text-white p-4">No bestsellers found.</p>
+          )}
         </div>
-        </div>
-      
+      </div>
     </section>
   );
 }
