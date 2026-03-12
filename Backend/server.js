@@ -16,8 +16,10 @@ connectDB();
 
 const app = express();
 
+const allowedOrigin = process.env.FRONTEND_URL?.replace(/\/$/, '') || 'http://localhost:5173';
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: allowedOrigin,
     credentials: true
 }));
 app.use(express.json()); // <-- ADD this so req.body is parsed for JSON payloads
