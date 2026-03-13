@@ -11,8 +11,9 @@ export const login = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
+      const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/users/login`,
+        `${apiUrl}/api/users/login`,
         { email, password },
         config
       );
@@ -38,8 +39,9 @@ export const register = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
+      const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000').replace(/\/$/, '');
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/users/register`,
+        `${apiUrl}/api/users/register`,
         { name, email, password },
         config
       );

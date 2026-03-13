@@ -10,7 +10,8 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,30 +33,30 @@ export default function Register() {
       setMessage("Passwords do not match");
     } else {
       setMessage(null);
-      dispatch(register({ name, email, password }));
+      dispatch(register({ name, email: email.trim(), password }));
     }
   };
 
   return (
-    <section className="pt-32 pb-20">
+    <section className="pt-32 pb-20 font-['Outfit']">
       <Container>
         <div className="max-w-[500px] mx-auto bg-white p-8 border border-gray-200 shadow-sm">
           <h1 className="text-[2.5rem] font-['Bebas_Neue'] mb-6 text-center tracking-tight">REGISTER</h1>
           
           {message && (
-            <div className="bg-red-50 text-red-600 p-3 mb-6 text-sm border-l-4 border-red-500">
+            <div className="bg-red-50 text-red-600 p-3 mb-6 text-sm border-l-4 border-red-500 uppercase font-semibold">
               {message}
             </div>
           )}
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 mb-6 text-sm border-l-4 border-red-500">
+            <div className="bg-red-50 text-red-600 p-3 mb-6 text-sm border-l-4 border-red-500 uppercase font-semibold">
               {error}
             </div>
           )}
 
           <form onSubmit={submitHandler} className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <label htmlFor="name" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
+              <label htmlFor="name" className="text-sm font-semibold uppercase tracking-wider text-gray-400">
                 Full Name
               </label>
               <input
@@ -70,7 +71,7 @@ export default function Register() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
+              <label htmlFor="email" className="text-sm font-semibold uppercase tracking-wider text-gray-400">
                 Email Address
               </label>
               <input
@@ -85,33 +86,51 @@ export default function Register() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="password" class="password-label" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
+              <label htmlFor="password" class="password-label" className="text-sm font-semibold uppercase tracking-wider text-gray-400">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors w-full"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors"
+                >
+                  <i className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                </button>
+              </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="confirmPassword" class="confirmPassword-label" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
+              <label htmlFor="confirmPassword" class="confirmPassword-label" className="text-sm font-semibold uppercase tracking-wider text-gray-400">
                 Confirm Password
               </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors w-full"
+                  placeholder="Confirm password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors"
+                >
+                  <i className={`fas ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                </button>
+              </div>
             </div>
 
             <Button

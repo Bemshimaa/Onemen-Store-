@@ -26,7 +26,7 @@ export default function Login() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(login({ email, password }));
+    dispatch(login({ email: email.trim(), password }));
   };
 
   return (
@@ -36,20 +36,20 @@ export default function Login() {
           <h1 className="text-[2.5rem] font-['Bebas_Neue'] mb-6 text-center tracking-tight">LOGIN</h1>
           
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 mb-6 text-sm border-l-4 border-red-500">
+            <div className="bg-red-50 text-red-600 p-3 mb-6 text-sm border-l-4 border-red-500 font-['Outfit'] uppercase">
               {error}
             </div>
           )}
 
           <form onSubmit={submitHandler} className="flex flex-col gap-6">
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
+              <label htmlFor="email" className="text-sm font-['Outfit'] font-semibold uppercase tracking-wider text-gray-400">
                 Email Address
               </label>
               <input
                 type="email"
                 id="email"
-                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
+                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors font-['Outfit']"
                 placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -58,14 +58,14 @@ export default function Login() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label htmlFor="password" title="password" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
+              <label htmlFor="password" title="password" className="text-sm font-['Outfit'] font-semibold uppercase tracking-wider text-gray-400">
                 Password
               </label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   id="password"
-                  className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors w-full"
+                  className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors w-full font-['Outfit']"
                   placeholder="Enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

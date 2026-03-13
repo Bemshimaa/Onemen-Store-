@@ -90,7 +90,7 @@ export default function MyNav() {
         </div>
 
         {isOpen && (
-          <div className="bg-white flex flex-col md:hidden absolute top-full w-1/2 right-0 border-l border-b border-gray-100 shadow-xl">
+          <div className="bg-white flex flex-col md:hidden absolute top-full w-1/2 right-0 border-l border-b border-gray-100 shadow-xl text-black">
             <Link to="/" onClick={() => setIsOpen(false)} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm">
               HOME
             </Link>
