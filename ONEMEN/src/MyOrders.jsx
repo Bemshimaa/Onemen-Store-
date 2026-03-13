@@ -28,7 +28,7 @@ const FlutterPaymentButton = ({ order, user }) => {
 
   return (
     <button
-      className="w-full bg-black text-white py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:opacity-80 transition-opacity"
+      className="w-full md:w-auto md:min-w-[160px] bg-black text-white py-4 px-8 font-['Bebas_Neue'] tracking-widest text-lg hover:opacity-80 transition-opacity"
       onClick={() => {
         handleFlutterPayment({
           callback: async (response) => {
