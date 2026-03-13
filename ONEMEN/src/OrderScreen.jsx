@@ -32,7 +32,8 @@ const FlutterPaymentButton = ({ order, user }) => {
       onClick={() => {
         handleFlutterPayment({
           callback: async (response) => {
-            if (response.status === "successful") {
+            // Flutterwave sometimes returns 'successful' or 'success'
+            if (response.status === "successful" || response.status === "success") {
               try {
                 const config = {
                   headers: {
@@ -219,8 +220,9 @@ export default function OrderScreen() {
                             Authorization: `Bearer ${user.token}`,
                           },
                         };
+                        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
                         await axios.put(
-                          `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/tracking`,
+                          `${apiUrl}/api/orders/${order._id}/tracking`,
                           { trackingNumber },
                           config
                         );
@@ -243,8 +245,9 @@ export default function OrderScreen() {
                               Authorization: `Bearer ${user.token}`,
                             },
                           };
+                          const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
                           await axios.put(
-                            `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/deliver`,
+                            `${apiUrl}/api/orders/${order._id}/deliver`,
                             {},
                             config
                           );

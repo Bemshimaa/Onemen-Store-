@@ -25,7 +25,9 @@ const allowedOrigins = [
     process.env.FRONTEND_URL?.replace(/\/$/, ""),
     'http://localhost:5173',
     'http://127.0.0.1:5173',
-    'https://onemen-store.vercel.app'
+    'https://onemen-store.vercel.app',
+    'https://onemen.store',
+    'https://www.onemen.store'
 ].filter(Boolean).map(origin => {
     if (origin.startsWith('http')) return origin;
     return `https://${origin}`;
