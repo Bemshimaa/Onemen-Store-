@@ -27,32 +27,20 @@ const registerUser = asyncHandler(async (req, res) => { // define an async route
 const authUser = asyncHandler(async (req, res) => { // login handler
     const { email, password } = req.body; // get credentials from client
     
-    // Log the attempt (careful with PII in production, but good for debugging now)
-    console.log(`Login attempt for email: ${email}`);
-
     const user = await User.findOne({ email: email.toLowerCase() }); // find user by email
     
-    if (user) {
-        console.log(`User found: ${user.email}. Checking password...`);
-        if (await user.matchPassword(password)) {
-            console.log(`Password match successful for ${user.email}`);
-            res.json({ // respond 200 OK (default) with user info + token
-                _id: user._id,
-                name: user.name,
-                email: user.email,
-                isAdmin: user.isAdmin,
-                token: generateToken(user._id), // fresh token for client
-            });
-            return;
-        } else {
-            console.warn(`Password mismatch for ${user.email}`);
-        }
+    if (user && (await user.matchPassword(password))) { // if user exists and password matches
+        res.json({ // respond 200 OK (default) with user info + token
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id), // fresh token for client
+        });
     } else {
-        console.warn(`No user found with email: ${email}`);
+        res.status(401); // Unauthorized
+        throw new Error('Invalid email or password'); // error handled by global error middleware
     }
-
-    res.status(401); // Unauthorized
-    throw new Error('Invalid email or password'); // error handled by global error middleware
 });
 
 const getUserProfile = asyncHandler(async (req, res) => {
