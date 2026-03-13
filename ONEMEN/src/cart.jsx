@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { applyCoupon, removeCoupon } from "./features/cart/cartslice";
+import { applyCoupon, removeCoupon, removeFromCart } from "./features/cart/cartslice";
 
 
 export default function Cart() {

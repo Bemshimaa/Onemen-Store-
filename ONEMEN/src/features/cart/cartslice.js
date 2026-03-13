@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit'
 
-const savedCart = localStorage.getItem("cart")
-const savedShippingAddress = localStorage.getItem("shippingAddress")
-const savedCoupon = localStorage.getItem("coupon")
+const userInfo = localStorage.getItem("userInfo")
+const savedCart = userInfo ? localStorage.getItem("cart") : null
+const savedShippingAddress = userInfo ? localStorage.getItem("shippingAddress") : null
+const savedCoupon = userInfo ? localStorage.getItem("coupon") : null
 
 const initialState = {
     items: savedCart ? JSON.parse(savedCart) : [],

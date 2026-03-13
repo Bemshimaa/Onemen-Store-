@@ -8,6 +8,7 @@ import Container from "./container";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,15 +61,24 @@ export default function Login() {
               <label htmlFor="password" title="password" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
                 Password
               </label>
-              <input
-                type="password"
-                id="password"
-                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors w-full"
+                  placeholder="Enter password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors"
+                >
+                  <i className={`fas ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
+                </button>
+              </div>
             </div>
 
             <Button
