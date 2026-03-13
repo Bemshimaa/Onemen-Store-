@@ -11,7 +11,7 @@ export default function Bestseller() {
 
   useEffect(() => {
     const fetchBestsellers = async () => {
-      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
       const fetchUrl = `${apiUrl}/api/products/bestsellers`;
       
       try {

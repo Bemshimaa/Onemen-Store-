@@ -39,7 +39,7 @@ const FlutterPaymentButton = ({ order, user }) => {
                     Authorization: `Bearer ${user.token}`,
                   },
                 };
-                const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+                const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
                 await axios.put(
                   `${apiUrl}/api/orders/${order._id}/pay`,
                   {
@@ -82,7 +82,7 @@ export default function OrderScreen() {
             Authorization: `Bearer ${user.token}`,
           },
         };
-        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
         const { data } = await axios.get(`${apiUrl}/api/orders/${orderId}`, config);
         setOrder(data);
         setLoading(false);

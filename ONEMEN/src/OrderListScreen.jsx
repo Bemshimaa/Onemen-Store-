@@ -20,7 +20,7 @@ export default function OrderListScreen() {
             Authorization: `Bearer ${user.token}`,
           },
         };
-        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
         const { data } = await axios.get(`${apiUrl}/api/orders`, config);
         setOrders(data);
         setLoading(false);

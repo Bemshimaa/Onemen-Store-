@@ -11,7 +11,7 @@ export const login = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
-      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
       const { data } = await axios.post(
         `${apiUrl}/api/users/login`,
         { email, password },
@@ -39,7 +39,7 @@ export const register = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
-      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-backend.onrender.com').replace(/\/$/, '');
       const { data } = await axios.post(
         `${apiUrl}/api/users/register`,
         { name, email, password },
