@@ -185,7 +185,7 @@ export default function MyOrders() {
         {orders.length === 0 ? (
           <div className="bg-gray-50 p-10 text-center border border-dashed border-gray-300">
             <p className="font-['Oswald'] uppercase tracking-widest text-gray-500">You have no orders yet.</p>
-            <Link to="/Products/69b2e9f4e9ed06091e034f63" className="mt-4 inline-block text-black underline font-['Oswald'] uppercase text-sm tracking-widest hover:text-gray-600 transition-colors">
+            <Link to="/Products/69b35d845061c9a003b59a49" className="mt-4 inline-block text-black underline font-['Oswald'] uppercase text-sm tracking-widest hover:text-gray-600 transition-colors">
               Start Shopping
             </Link>
           </div>

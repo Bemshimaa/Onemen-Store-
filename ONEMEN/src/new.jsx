@@ -39,7 +39,7 @@ export default function New() {
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white text-center animate-fade-up">
         <h1 className="md:text-[3rem] lg:text-[4rem] text-[2rem] leading-none text-white drop-shadow-lg">NEW IN</h1>
         <p className="text-[0.8rem] lg:text-[1rem] lg:leading-none sm:text-[0.9rem] pb-2 font-['Oswald'] tracking-widest uppercase opacity-90 drop-shadow-md">Shop From our latest release - ONEMEN Ringer Tee</p>
-        <Link to={`/Products/${productId || "69b2e9f4e9ed06091e034f63"}`}>
+        <Link to={`/Products/${productId || "69b35d845061c9a003b59a49"}`}>
           <Button variant="white" className="py-2 px-8 font-['Bebas_Neue'] tracking-widest hover-expand active:scale-95 transition-transform">SHOP NOW</Button>
         </Link>
       </div>

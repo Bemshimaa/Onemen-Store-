@@ -79,7 +79,7 @@ export default function ProductPage() {
     return (
       <div className="pt-40 text-center flex flex-col gap-4">
         <div className="text-red-500 font-['Oswald'] uppercase tracking-widest text-xl">{error || 'Product Not Found'}</div>
-        <Link to="/Products/69b2e9f4e9ed06091e034f63" className="text-black underline font-['Oswald'] uppercase text-sm tracking-widest">Back to Collection</Link>
+        <Link to="/Products/69b35d845061c9a003b59a49" className="text-black underline font-['Oswald'] uppercase text-sm tracking-widest">Back to Collection</Link>
       </div>
     );
   }

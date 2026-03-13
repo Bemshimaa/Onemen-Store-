@@ -77,7 +77,7 @@ export default function Cart() {
           <p className="font-['Oswald'] uppercase tracking-widest text-gray-500 mb-8 max-w-md">
             Looks like you haven't added anything to your cart yet. Browse our latest collection to find something you'll love.
           </p>
-          <Link to="/Products/69b2e9f4e9ed06091e034f63">
+          <Link to="/Products/69b35d845061c9a003b59a49">
             <Button className="px-12 py-4 text-lg font-['Bebas_Neue'] tracking-widest">
               SHOP COLLECTION
             </Button>

@@ -30,7 +30,7 @@ export default function Hero() {
       <div className='hero-text absolute bottom-[5%] left-1/2 -translate-x-1/2 flex flex-col items-center w-1/2 text-white animate-fade-up'>
         <h1 className='text-5xl md:text-8xl leading-none text-center sm:text-white'>STREET STYLE UNLEASHED</h1>
 
-        <Link to={`/Products/${productId || "69b2e9f4e9ed06091e034f63"}`}>
+        <Link to={`/Products/${productId || "69b35d845061c9a003b59a49"}`}>
           <Button className="py-3 px-4 border border-white-500 hover-expand active:scale-95 transition-transform" variant="black">SHOP NOW</Button>
         </Link>
       </div>
