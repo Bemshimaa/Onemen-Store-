@@ -85,10 +85,29 @@ export default function OrderScreen() {
                 ))}
               </div>
             </div>
+            {order.trackingNumber && (
+              <div className="bg-white p-6 border border-gray-200">
+                <h2 className="text-xl font-['Bebas_Neue'] tracking-widest mb-4">TRACKING</h2>
+                <div className="flex flex-col gap-4">
+                  <p className="font-['Oswald'] text-sm uppercase tracking-widest text-gray-600">
+                    <strong className="text-black">Tracking Number:</strong> {order.trackingNumber}
+                  </p>
+                  <a 
+                    href={`https://gigl.online/track-order?order_id=${order.trackingNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-black text-white text-center py-3 font-['Bebas_Neue'] tracking-widest hover:bg-gray-800 transition-colors"
+                  >
+                    TRACK ON GIGL WEBSITE
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="bg-black text-white p-6 h-fit sticky top-32">
             <h2 className="text-xl font-['Bebas_Neue'] tracking-widest mb-6">ORDER SUMMARY</h2>
+            {/* ... (existing summary items) */}
             <div className="flex flex-col gap-4 text-sm font-['Oswald'] uppercase tracking-widest">
               <div className="flex justify-between border-b border-gray-800 pb-3">
                 <span>Items</span>
@@ -114,7 +133,9 @@ export default function OrderScreen() {
               </div>
             </div>
             
+            {/* ... (existing buttons) */}
             {!order.isPaid && (
+              /* ... Paystack Button logic ... */
               <div className="mt-8">
                 {!import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ? (
                   <div className="bg-red-900/20 border border-red-500/50 text-red-200 p-4 font-['Oswald'] text-xs uppercase tracking-widest">
@@ -153,11 +174,9 @@ export default function OrderScreen() {
                           },
                           config
                         );
-                        // Refresh the page or the order state to show "PAID"
                         window.location.reload();
                       } catch (err) {
                         console.error("Error updating payment status:", err);
-                        alert(err.response && err.response.data.message ? err.response.data.message : "There was a problem verifying your payment. Please contact support.");
                       }
                     };
                     updatePayment();
@@ -168,11 +187,18 @@ export default function OrderScreen() {
             </div>
             )}
 
-            {user && user.isAdmin && order.isPaid && !order.isDelivered && (
-              <div className="mt-4 pt-4 border-t border-gray-800">
-                <button
-                  onClick={async () => {
-                    if (window.confirm("Mark this order as delivered?")) {
+            {user && user.isAdmin && order.isPaid && (
+              <div className="mt-4 pt-4 border-t border-gray-800 flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className="text-[10px] tracking-widest uppercase opacity-60">Admin: Update Tracking Number</label>
+                  <input 
+                    type="text"
+                    placeholder="Enter GIGL Waybill Number"
+                    className="bg-zinc-900 border border-zinc-800 p-3 text-xs focus:outline-none focus:border-white transition-colors"
+                    defaultValue={order.trackingNumber}
+                    onBlur={async (e) => {
+                      const trackingNumber = e.target.value;
+                      if (!trackingNumber) return;
                       try {
                         const config = {
                           headers: {
@@ -180,20 +206,45 @@ export default function OrderScreen() {
                           },
                         };
                         await axios.put(
-                          `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/deliver`,
-                          {},
+                          `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/tracking`,
+                          { trackingNumber },
                           config
                         );
+                        alert("Tracking number updated!");
                         window.location.reload();
                       } catch (err) {
                         alert(err.response && err.response.data.message ? err.response.data.message : err.message);
                       }
-                    }
-                  }}
-                  className="w-full bg-white text-black py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:bg-gray-200 transition-colors"
-                >
-                  MARK AS DELIVERED
-                </button>
+                    }}
+                  />
+                </div>
+                
+                {!order.isDelivered && (
+                  <button
+                    onClick={async () => {
+                      if (window.confirm("Mark this order as delivered?")) {
+                        try {
+                          const config = {
+                            headers: {
+                              Authorization: `Bearer ${user.token}`,
+                            },
+                          };
+                          await axios.put(
+                            `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/deliver`,
+                            {},
+                            config
+                          );
+                          window.location.reload();
+                        } catch (err) {
+                          alert(err.response && err.response.data.message ? err.response.data.message : err.message);
+                        }
+                      }
+                    }}
+                    className="w-full bg-white text-black py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:bg-gray-200 transition-colors"
+                  >
+                    MARK AS DELIVERED
+                  </button>
+                )}
               </div>
             )}
           </div>

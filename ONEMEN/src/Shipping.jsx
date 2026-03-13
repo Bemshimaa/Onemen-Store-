@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { saveShippingAddress } from "./features/cart/cartslice";
 import Button from "./button";
 import Container from "./container";
+import { NIGERIAN_STATES } from "./utils/shippingRates";
 
 export default function Shipping() {
   const { shippingAddress } = useSelector((state) => state.cart);
@@ -63,15 +64,20 @@ export default function Shipping() {
               <label htmlFor="state" className="text-sm font-['Oswald'] uppercase tracking-wider text-gray-600">
                 State / Region
               </label>
-              <input
-                type="text"
+              <select
                 id="state"
-                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors"
-                placeholder="Enter state"
+                className="border border-gray-300 p-3 focus:outline-none focus:border-black transition-colors bg-white font-['Oswald']"
                 value={state}
                 onChange={(e) => setRegion(e.target.value)}
                 required
-              />
+              >
+                <option value="">Select State</option>
+                {NIGERIAN_STATES.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="flex flex-col gap-2">

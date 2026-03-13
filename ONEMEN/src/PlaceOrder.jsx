@@ -22,7 +22,8 @@ export default function PlaceOrder() {
   const itemsPrice = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const discount = coupon ? (itemsPrice * coupon.discount) / 100 : 0;
-  const shippingPrice = itemsPrice > 100000 ? 0 : 5000;
+  
+  const shippingPrice = itemsPrice > 150000 ? 0 : 5000;
   const taxPrice = Number((0.05 * (itemsPrice - discount)).toFixed(2));
   const totalPrice = itemsPrice - discount + shippingPrice + taxPrice;
 

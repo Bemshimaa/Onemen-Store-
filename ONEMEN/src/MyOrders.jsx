@@ -76,6 +76,21 @@ function OrderDetailsModal({ orderId, onClose, user }) {
                     {order.isPaid ? 'PAID' : 'NOT PAID'}
                   </div>
                 </div>
+
+                {order.trackingNumber && (
+                  <div>
+                    <h2 className="text-xl font-['Bebas_Neue'] tracking-widest mb-3 uppercase">TRACKING</h2>
+                    <p className="font-['Oswald'] text-xs tracking-widest text-gray-600 uppercase mb-2">Number: {order.trackingNumber}</p>
+                    <a 
+                      href={`https://gigl.online/track-order?order_id=${order.trackingNumber}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-block bg-black text-white px-4 py-2 font-['Bebas_Neue'] tracking-widest text-xs hover:opacity-80 transition-opacity"
+                    >
+                      TRACK ON GIGL
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* Order Items */}
