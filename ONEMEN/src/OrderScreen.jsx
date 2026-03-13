@@ -49,10 +49,10 @@ export default function OrderScreen() {
             <div className="bg-white p-6 border border-gray-200">
               <h2 className="text-xl font-['Bebas_Neue'] tracking-widest mb-4">SHIPPING</h2>
               <div className="text-gray-600 flex flex-col gap-1">
-                <p><strong>Name:</strong> {order.user.name}</p>
-                <p><strong>Email:</strong> {order.user.email}</p>
-                <p><strong>Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.state}</p>
-                <p><strong>Phone:</strong> {order.shippingAddress.phone}</p>
+                <p><strong>Name:</strong> {order.user?.name || 'User'}</p>
+                <p><strong>Email:</strong> {order.user?.email || 'N/A'}</p>
+                <p><strong>Address:</strong> {order.shippingAddress?.address}, {order.shippingAddress?.city}, {order.shippingAddress?.state}</p>
+                <p><strong>Phone:</strong> {order.shippingAddress?.phone}</p>
               </div>
               <div className={`mt-4 p-3 font-['Oswald'] uppercase text-sm tracking-widest ${order.isDelivered ? 'bg-green-50 text-green-700' : 'bg-orange-50 text-orange-700'}`}>
                 {order.isDelivered ? `Delivered on ${new Date(order.deliveredAt).toLocaleDateString()}` : 'Not Delivered'}

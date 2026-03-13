@@ -15,10 +15,10 @@ export default function Card({ image, name, price, id, countInStock }) {
         )}
       </Link>
       <div className="flex flex-row justify-between items-center md:mb-8 mb-3 ">
-        <h2 className="text-[2rem] ">{name}</h2>
-        <i className="far fa-heart"></i>
+        <h2 className="text-[2rem] font-['Bebas_Neue'] tracking-tight">{name}</h2>
+        <i className="far fa-heart opacity-20 cursor-not-allowed pointer-events-none"></i>
       </div>
-      <p className="text-[1.2rem]">
+      <p className="text-[1.2rem] font-['Oswald'] tracking-wider">
         ₦{price.toLocaleString()} 
         <span className="ml-4">
           <Link to={`/Products/${id}`}>

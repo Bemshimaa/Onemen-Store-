@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import Container from "./container";
@@ -15,27 +15,28 @@ export default function MyNav() {
     dispatch(logout());
   };
 
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const textColor = isHome ? "text-white" : "text-black";
+
   return (
-    <nav className="navbar py-5 px-5 absolute w-full z-50">
+    <nav className={`navbar py-5 px-5 absolute w-full z-50 ${textColor} animate-slide-down`}>
       <Container className="flex flex-row justify-between items-center">
         <div className="logo">
-          <a className="text-[1.5rem]" href="/">
+          <a className="text-[1.5rem] font-bold hover:scale-110 transition-transform inline-block" href="/">
             ONEMEN
           </a>
         </div>
         <div className="main-menu hidden md:flex">
           <ul className="flex flex-row gap-5">
-            <li>
+            <li className="hover:opacity-70">
               <Link to="/">HOME</Link>
             </li>
-            <li>
-              <Link to="/#about">ABOUT</Link>
+            <li className="opacity-30 cursor-not-allowed">
+              <Link to="/" onClick={(e) => e.preventDefault()} className="cursor-not-allowed">ABOUT</Link>
             </li>
-            <li>
-              <Link to="/Products">SHOP</Link>
-            </li>
-            <li>
-              <Link to="/#contact">CONTACT</Link>
+            <li className="opacity-30 cursor-not-allowed">
+              <Link to="/" onClick={(e) => e.preventDefault()} className="cursor-not-allowed">CONTACT</Link>
             </li>
             {user && user.isAdmin && (
               <li className="relative group">
@@ -53,21 +54,21 @@ export default function MyNav() {
               </li>
             )}
             {user ? (
-              <li className="flex flex-row items-center gap-4 text-xs font-['Oswald'] tracking-widest">
-                <Link to="/myorders" className="hover:text-gray-500 uppercase">
+              <li className={`flex flex-row items-center gap-4 text-xs font-['Oswald'] tracking-widest ${textColor}`}>
+                <Link to="/myorders" className="hover:opacity-70 uppercase">
                   MY ORDERS
                 </Link>
                 <span className="opacity-30">|</span>
                 <button
                   onClick={logoutHandler}
-                  className="hover:text-gray-500 cursor-pointer uppercase"
+                  className="hover:opacity-70 cursor-pointer uppercase"
                 >
                   LOGOUT ({user.name})
                 </button>
               </li>
             ) : (
               <li>
-                <Link to="/login" className="font-['Oswald'] uppercase text-sm tracking-widest">
+                <Link to="/login" className={`font-['Oswald'] uppercase text-sm tracking-widest hover:opacity-70 ${textColor}`}>
                   LOGIN
                 </Link>
               </li>
@@ -93,13 +94,10 @@ export default function MyNav() {
             <Link to="/" onClick={() => setIsOpen(false)} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm">
               HOME
             </Link>
-            <Link to="/#about" onClick={() => setIsOpen(false)} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm">
+            <Link to="/" onClick={(e) => e.preventDefault()} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm opacity-30 cursor-not-allowed">
               ABOUT
             </Link>
-            <Link to="/Products" onClick={() => setIsOpen(false)} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm">
-              SHOP
-            </Link>
-            <Link to="/#contact" onClick={() => setIsOpen(false)} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm">
+            <Link to="/" onClick={(e) => e.preventDefault()} className="border-b border-gray-100 p-4 font-['Oswald'] tracking-widest text-sm opacity-30 cursor-not-allowed">
               CONTACT
             </Link>
             {user ? (

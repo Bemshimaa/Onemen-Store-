@@ -33,7 +33,7 @@ export default function Myapp() {
           element={
             <>
               <Hero />
-              <Bestseller />
+              {/* <Bestseller /> - Hidden to focus on single drop */}
               <Culture />
               <New />
             </>

@@ -1,18 +1,51 @@
-import NewImage from "./assets/IMAGES/New-In-img.jpg";
+import { useState, useEffect } from "react";
+import NewImage from "./assets/IMAGES/new in image.jpeg";
 import Button from "./button";
+import { Link } from "react-router-dom";
+import axios from "axios";
+
 export default function New() {
+  const [productId, setProductId] = useState("");
+
+  useEffect(() => {
+    const fetchProductId = async () => {
+      try {
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+        // Find product that contains "ringer" or "red & white" (to support both names)
+        const product = data.find(p => 
+          p.name.toLowerCase().includes("ringer") || 
+          p.name.toLowerCase().includes("red & white")
+        );
+        if (product) {
+          setProductId(product._id);
+        }
+      } catch (error) {
+        console.error("Error fetching product ID for New In section:", error);
+      }
+    };
+    fetchProductId();
+  }, []);
+
   return (
-    <section className="w-full h-[350px] lg:h-[400px] relative">
+    <section className="w-full h-[350px] lg:h-[400px] relative overflow-hidden group">
+      {/* Top blend */}
+      <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-b from-black to-transparent opacity-50 z-10 pointer-events-none"></div>
+
       <img
-        className="w-full h-full object-cover object-[center_40%]"
+        className="w-full h-full object-cover object-[center_40%] transition-transform duration-1000 group-hover:scale-105 group-active:scale-105"
         src={NewImage}
         alt="new collection"
       />
-      <div className="absolute bottom-[5%] left-1/2 -translate-x-1/2 md:top-[150px] md:right-1/4 flex flex-col items-center gap-1 text-white text-center">
-        <h1 className="md:text-[3rem] lg:text-[4rem] text-[2rem] leading-none">NEW IN</h1>
-        <p className="text-[0.8rem] lg:text-[1rem] lg:leading-none sm:text-[0.9rem] pb-2">Shop From our latest release - INAGI</p>
-        <Button variant="white" className="py-1 px-2 md:py-3 md:px-4 lg:py-2 lg:px-3 lg:text-[]">SHOP NOW</Button>
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-white text-center animate-fade-up">
+        <h1 className="md:text-[3rem] lg:text-[4rem] text-[2rem] leading-none text-white drop-shadow-lg">NEW IN</h1>
+        <p className="text-[0.8rem] lg:text-[1rem] lg:leading-none sm:text-[0.9rem] pb-2 font-['Oswald'] tracking-widest uppercase opacity-90 drop-shadow-md">Shop From our latest release - ONEMEN Ringer Tee</p>
+        <Link to={`/Products/${productId || "69b2e9f4e9ed06091e034f63"}`}>
+          <Button variant="white" className="py-2 px-8 font-['Bebas_Neue'] tracking-widest hover-expand active:scale-95 transition-transform">SHOP NOW</Button>
+        </Link>
       </div>
+
+      {/* Bottom blend */}
+      <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-black to-transparent opacity-50 z-10 pointer-events-none"></div>
     </section>
   );
 }

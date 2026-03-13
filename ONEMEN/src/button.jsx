@@ -1,16 +1,20 @@
-export default function Button ({variant="black" , children, className, onClick }){
+export default function Button({ variant = "black", children, className, onClick, disabled }) {
+  const baseStyles = "p-4 transition-all duration-300";
 
-     const baseStyles = "p-4";
+  const variants = {
+    black: "bg-black text-white",
+    white: "bg-white text-black",
+  };
 
-     const variants = {
-        black: "bg-black text-white",
-        white: "bg-white text-black",
-     };
-    return(
+  const disabledStyles = disabled ? "cursor-not-allowed" : "cursor-pointer";
 
-       
-        <>
-        <button onClick={onClick} className={`${baseStyles} ${variants[variant]} ${className}`} href="index.html">{children}</button>
-        </>
-    );
+  return (
+    <button
+      onClick={!disabled ? onClick : undefined}
+      className={`${baseStyles} ${variants[variant]} ${disabledStyles} ${className}`}
+      disabled={disabled}
+    >
+      {children}
+    </button>
+  );
 }

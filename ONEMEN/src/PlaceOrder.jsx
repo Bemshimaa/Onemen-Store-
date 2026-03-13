@@ -75,7 +75,10 @@ export default function PlaceOrder() {
         <div className="grid md:grid-cols-3 gap-8">
           <div className="md:col-span-2 flex flex-col gap-8">
             <div className="bg-white p-6 border border-gray-200">
-              <h2 className="text-xl font-['Bebas_Neue'] tracking-widest mb-4">SHIPPING</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-['Bebas_Neue'] tracking-widest">SHIPPING</h2>
+                <Link to="/shipping" className="text-xs font-['Oswald'] underline tracking-widest opacity-50 hover:opacity-100">EDIT</Link>
+              </div>
               <p className="text-gray-600">
                 <strong className="text-black uppercase text-xs font-['Oswald'] block mb-1">Address:</strong>
                 {cart.shippingAddress.address}, {cart.shippingAddress.city},{" "}

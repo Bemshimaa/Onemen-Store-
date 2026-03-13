@@ -18,7 +18,7 @@ export default function Quantity({id, currentQuantity}) {
         <i onClick={handleRemove} className="fa fa-trash"></i>
       </div>
       <div className="border p-2">
-        <i className="far fa-heart"></i>
+        <i className="far fa-heart opacity-20 cursor-not-allowed"></i>
       </div>
     </div>
   );
