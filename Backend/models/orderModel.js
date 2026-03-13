@@ -60,6 +60,10 @@ const orderSchema = mongoose.Schema(
     couponCode: {
       type: String,
     },
+    trackingNumber: {
+      type: String,
+      default: '',
+    },
     isPaid: {
       type: Boolean,
       required: true,

@@ -170,6 +170,22 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Update order tracking number
+// @route   PUT /api/orders/:id/tracking
+// @access  Private/Admin
+const updateOrderTrackingNumber = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.trackingNumber = req.body.trackingNumber;
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
 module.exports = {
   addOrderItems,
   getOrderById,
@@ -177,4 +193,5 @@ module.exports = {
   getMyOrders,
   getOrders,
   updateOrderToDelivered,
+  updateOrderTrackingNumber,
 };
