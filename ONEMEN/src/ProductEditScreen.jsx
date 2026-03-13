@@ -25,7 +25,8 @@ export default function ProductEditScreen() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${productId}`);
+        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+        const { data } = await axios.get(`${apiUrl}/api/products/${productId}`);
         setName(data.name);
         setPrice(data.price);
         setImage(data.image);
@@ -52,8 +53,9 @@ export default function ProductEditScreen() {
           Authorization: `Bearer ${user.token}`,
         },
       };
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
       await axios.put(
-        `${import.meta.env.VITE_API_URL}/api/products/${productId}`,
+        `${apiUrl}/api/products/${productId}`,
         { name, price, image, brand, category, countInStock, description },
         config
       );

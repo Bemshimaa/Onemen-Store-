@@ -10,14 +10,17 @@ export default function New() {
   useEffect(() => {
     const fetchProductId = async () => {
       try {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
-        // Find product that contains "ringer" or "red & white" (to support both names)
-        const product = data.find(p => 
-          p.name.toLowerCase().includes("ringer") || 
-          p.name.toLowerCase().includes("red & white")
-        );
-        if (product) {
-          setProductId(product._id);
+        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+        const { data } = await axios.get(`${apiUrl}/api/products`);
+        if (Array.isArray(data)) {
+          // Find product that contains "ringer" or "red & white" (to support both names)
+          const product = data.find(p => 
+            p.name.toLowerCase().includes("ringer") || 
+            p.name.toLowerCase().includes("red & white")
+          );
+          if (product) {
+            setProductId(product._id);
+          }
         }
       } catch (error) {
         console.error("Error fetching product ID for New In section:", error);

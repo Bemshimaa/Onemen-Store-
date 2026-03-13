@@ -15,7 +15,8 @@ export default function ProductListScreen() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+      const { data } = await axios.get(`${apiUrl}/api/products`);
       setProducts(data);
       setLoading(false);
     } catch (err) {
@@ -36,7 +37,8 @@ export default function ProductListScreen() {
             Authorization: `Bearer ${user.token}`,
           },
         };
-        await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, config);
+        const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+        await axios.delete(`${apiUrl}/api/products/${id}`, config);
         setMessage('Product deleted successfully');
         fetchProducts();
       } catch (err) {
@@ -52,7 +54,8 @@ export default function ProductListScreen() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, {}, config);
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+      const { data } = await axios.post(`${apiUrl}/api/products`, {}, config);
       fetchProducts();
       // In a real app, you would navigate to the edit screen here
       setMessage(`New product created: ${data.name}`);

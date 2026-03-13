@@ -40,8 +40,9 @@ export default function PlaceOrder() {
         },
       };
 
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/orders`,
+        `${apiUrl}/api/orders`,
         {
           orderItems: cart.items.map(item => ({
             name: item.name,

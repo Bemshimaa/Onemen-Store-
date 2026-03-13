@@ -13,8 +13,8 @@ export default function Products (){
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            const fetchUrl = `${apiUrl.replace(/\/$/, '')}/api/products`;
+            const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+            const fetchUrl = `${apiUrl}/api/products`;
             
             try {
                 setLoading(true);
@@ -26,7 +26,7 @@ export default function Products (){
             } catch (error) {
                 console.log('Error fetching products', error);
                 setError(error.message === 'Failed to fetch' 
-                    ? `Connection Error: Cannot reach API at ${apiUrl}` 
+                    ? `Connection Error: Cannot reach API at ${apiUrl}. Please ensure your internet is active and the server is live.` 
                     : error.message);
                 setLoading(false);
             }

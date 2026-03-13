@@ -24,8 +24,8 @@ export default function ProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-      const fetchUrl = `${apiUrl.replace(/\/$/, '')}/api/products/${productId}`;
+      const apiUrl = (import.meta.env.VITE_API_URL || 'https://onemen-store.onrender.com').replace(/\/$/, '');
+      const fetchUrl = `${apiUrl}/api/products/${productId}`;
       
       try {
         setLoading(true);
