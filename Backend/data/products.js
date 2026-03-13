@@ -1,12 +1,12 @@
 const products = [
   {
-    name: "Red & White tee",
+    name: "ONEMEN RINGER TEE",
     image: "/images/product-card-1.jpg",
     description:
       "Rep ONEMEN in a vintage-inspired top. Dropped shoulders and a baggy fit keep it relaxed and casual.",
     brand: "OneMen",    // <--- Added Brand
     category: "Tees",   // <--- Added Category
-    price: 27000,
+    price: 33500,
     countInStock: 10,
     rating: 4.5,
     numReviews: 12,
