@@ -19,14 +19,22 @@ const app = express();
 const allowedOrigins = [
     process.env.FRONTEND_URL?.replace(/\/$/, ""),
     'http://localhost:5173',
-    'http://127.0.0.1:5173'
-].filter(Boolean);
+    'http://127.0.0.1:5173',
+    'https://onemen-store.vercel.app'
+].filter(Boolean).map(origin => {
+    if (origin.startsWith('http')) return origin;
+    return `https://${origin}`;
+});
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
+            console.log('CORS rejected origin:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
