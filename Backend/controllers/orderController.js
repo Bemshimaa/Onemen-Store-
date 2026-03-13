@@ -70,24 +70,24 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     throw new Error('Order not found');
   }
 
-  // Verify transaction with Paystack
-  const reference = req.body.id;
+  // Verify transaction with Flutterwave
+  const transactionId = req.body.id; // Flutterwave uses transaction ID for verification
   const config = {
     headers: {
-      Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+      Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
     },
   };
 
   try {
     const { data } = await axios.get(
-      `https://api.paystack.co/transaction/verify/${reference}`,
+      `https://api.flutterwave.com/v3/transactions/${transactionId}/verify`,
       config
     );
 
-    if (data.status && data.data.status === 'success') {
-      // Verify amount matches (Paystack amount is in kobo)
-      const paystackAmount = data.data.amount / 100;
-      if (Math.round(paystackAmount) !== Math.round(order.totalPrice)) {
+    if (data.status === 'success' && data.data.status === 'successful') {
+      // Verify amount matches
+      const flutterwaveAmount = data.data.amount;
+      if (Math.round(flutterwaveAmount) !== Math.round(order.totalPrice)) {
         res.status(400);
         throw new Error('Amount mismatch');
       }
@@ -95,9 +95,9 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       order.isPaid = true;
       order.paidAt = Date.now();
       order.paymentResult = {
-        id: data.data.reference,
+        id: data.data.tx_ref,
         status: data.data.status,
-        update_time: data.data.paid_at,
+        update_time: data.data.created_at,
         email_address: data.data.customer.email,
       };
 
@@ -121,17 +121,17 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
       const { status, data } = error.response;
       if (status === 401) {
         res.status(401);
-        throw new Error('Paystack Authentication Error: Invalid Secret Key');
+        throw new Error('Flutterwave Authentication Error: Invalid Secret Key');
       } else if (status === 404) {
         res.status(404);
-        throw new Error('Paystack Error: Transaction reference not found');
+        throw new Error('Flutterwave Error: Transaction ID not found');
       } else {
         res.status(status || 400);
-        throw new Error(data.message || 'Paystack Verification failed');
+        throw new Error(data.message || 'Flutterwave Verification failed');
       }
     } else {
       res.status(500);
-      throw new Error('Could not connect to Paystack for verification');
+      throw new Error('Could not connect to Flutterwave for verification');
     }
   }
 });
