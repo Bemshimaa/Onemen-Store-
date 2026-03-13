@@ -16,6 +16,11 @@ connectDB();
 
 const app = express();
 
+// Root route moved to the top for easier health checks
+app.get('/', (req, res) => {
+    res.send("ONEMEN API is Running...");
+});
+
 const allowedOrigins = [
     process.env.FRONTEND_URL?.replace(/\/$/, ""),
     'http://localhost:5173',
@@ -45,10 +50,6 @@ app.use(express.json()); // <-- ADD this so req.body is parsed for JSON payloads
 const PORT = process.env.PORT || 5000;
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-    res.send("API is Running...");
-});
 
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
