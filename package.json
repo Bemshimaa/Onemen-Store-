@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "node Backend/server.js",
+    "start": "cd Backend && node server.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
