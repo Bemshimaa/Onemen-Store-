@@ -6,7 +6,7 @@ const products = [
       "Rep ONEMEN in a vintage-inspired top. Dropped shoulders and a baggy fit keep it relaxed and casual.",
     brand: "OneMen",    // <--- Added Brand
     category: "Tees",   // <--- Added Category
-    price: 1000,
+    price: 32000,
     countInStock: 10,
     rating: 4.5,
     numReviews: 12,
