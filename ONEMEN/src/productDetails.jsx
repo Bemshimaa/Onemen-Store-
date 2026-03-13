@@ -24,24 +24,35 @@ export default function ProductPage() {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const fetchUrl = `${apiUrl.replace(/\/$/, '')}/api/products/${productId}`;
+      
       try {
         setLoading(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products/${productId}`);
+        console.log(`Fetching product from: ${fetchUrl}`);
+        
+        const res = await fetch(fetchUrl);
         if (!res.ok) {
-          throw new Error('Product not found');
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(errorData.message || `Error ${res.status}: Product not found`);
         }
+        
         const data = await res.json();
-        data.image = data.image?.startsWith('http') ? data.image : `${import.meta.env.VITE_API_URL}${data.image}`;
+        // Handle image paths robustly
+        data.image = data.image?.startsWith('http') ? data.image : `${apiUrl.replace(/\/$/, '')}${data.image}`;
+        
         setResult(data);
         setMainImage(data.image);
         setLoading(false);
       } catch (e) {
         console.error('Error fetching product:', e);
-        setError(e.message);
+        setError(e.message === 'Failed to fetch' 
+          ? `Connection Error: Cannot reach API at ${apiUrl}. Checks if the server is running.` 
+          : e.message);
         setLoading(false);
       }
     };
-    fetchProduct();
+    if (productId) fetchProduct();
   }, [productId]);
 
   const handleAddToCart = () => {

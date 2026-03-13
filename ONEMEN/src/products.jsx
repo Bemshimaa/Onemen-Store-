@@ -13,16 +13,21 @@ export default function Products (){
 
     useEffect(() => {
         const fetchProducts = async () => {
+            const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const fetchUrl = `${apiUrl.replace(/\/$/, '')}/api/products`;
+            
             try {
                 setLoading(true);
-                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
+                const response = await fetch(fetchUrl);
                 if (!response.ok) throw new Error('Failed to fetch products');
                 const data = await response.json();
                 setProducts(data);
                 setLoading(false);
             } catch (error) {
                 console.log('Error fetching products', error);
-                setError(error.message);
+                setError(error.message === 'Failed to fetch' 
+                    ? `Connection Error: Cannot reach API at ${apiUrl}` 
+                    : error.message);
                 setLoading(false);
             }
         };

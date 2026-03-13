@@ -11,15 +11,16 @@ export default function Bestseller() {
 
   useEffect(() => {
     const fetchBestsellers = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const fetchUrl = `${apiUrl.replace(/\/$/, '')}/api/products/bestsellers`;
+      
       try {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/bestsellers`);
+        setLoading(true);
+        const { data } = await axios.get(fetchUrl);
         setBestsellers(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching bestsellers:", error);
-        // The provided snippet had server-side code here, which is not valid in a React component.
-        // It also had a syntax error (cconst instead of const).
-        // Assuming the intent was to ensure setLoading(false) is called on error.
         setLoading(false);
       }
     };
