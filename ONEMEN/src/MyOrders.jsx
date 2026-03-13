@@ -3,7 +3,65 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import Container from "./container";
-import { PaystackButton } from "react-paystack";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+
+const FlutterPaymentButton = ({ order, user }) => {
+  const config = {
+    public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY,
+    tx_ref: Date.now().toString(),
+    amount: order.totalPrice,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: user.email,
+      phone_number: order.shippingAddress.phone,
+      name: user.name,
+    },
+    customizations: {
+      title: "ONEMEN",
+      description: `Payment for Order ${order._id}`,
+      logo: "https://onemen.store/logo.png",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
+
+  return (
+    <button
+      className="w-full bg-black text-white py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:opacity-80 transition-opacity"
+      onClick={() => {
+        handleFlutterPayment({
+          callback: async (response) => {
+            if (response.status === "successful") {
+              try {
+                const config = {
+                  headers: {
+                    Authorization: `Bearer ${user.token}`,
+                  },
+                };
+                await axios.put(
+                  `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/pay`,
+                  {
+                    id: response.transaction_id,
+                    status: response.status,
+                  },
+                  config
+                );
+                window.location.reload();
+              } catch (err) {
+                console.error("Error updating payment status:", err);
+              }
+            }
+            closePaymentModal();
+          },
+          onClose: () => {},
+        });
+      }}
+    >
+      PAY NOW
+    </button>
+  );
+};
 
 function OrderDetailsModal({ orderId, onClose, user }) {
   const [order, setOrder] = useState(null);
@@ -135,16 +193,8 @@ function OrderDetailsModal({ orderId, onClose, user }) {
 
               {!order.isPaid && (
                 <div className="w-full md:w-auto">
-                    {import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ? (
-                      <PaystackButton
-                        className="w-full md:w-[250px] bg-black text-white py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:opacity-80 transition-opacity"
-                        publicKey={import.meta.env.VITE_PAYSTACK_PUBLIC_KEY}
-                        email={user.email}
-                        amount={Math.round(order.totalPrice * 100)}
-                        currency="NGN"
-                        onSuccess={() => window.location.reload()}
-                        text="PAY NOW"
-                      />
+                    {import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY ? (
+                      <FlutterPaymentButton order={order} user={user} />
                     ) : (
                       <p className="text-red-500 text-[10px] tracking-widest uppercase">Payment Key Missing</p>
                     )}

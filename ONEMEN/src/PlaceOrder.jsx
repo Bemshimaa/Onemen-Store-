@@ -51,7 +51,7 @@ export default function PlaceOrder() {
             product: item.id
           })),
           shippingAddress: cart.shippingAddress,
-          paymentMethod: "Paystack",
+          paymentMethod: "Flutterwave",
           itemsPrice: itemsPrice,
           shippingPrice: shippingPrice,
           taxPrice: taxPrice,

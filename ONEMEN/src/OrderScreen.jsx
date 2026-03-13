@@ -2,8 +2,67 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { PaystackButton } from "react-paystack";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import Container from "./container";
+
+const FlutterPaymentButton = ({ order, user }) => {
+  const config = {
+    public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY,
+    tx_ref: Date.now().toString(),
+    amount: order.totalPrice,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: user.email,
+      phone_number: order.shippingAddress.phone,
+      name: user.name,
+    },
+    customizations: {
+      title: "ONEMEN",
+      description: `Payment for Order ${order._id}`,
+      logo: "https://onemen.store/logo.png",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
+
+  return (
+    <button
+      className="w-full bg-[#FB4E4E] text-white py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:bg-[#d43f3f] transition-colors"
+      onClick={() => {
+        handleFlutterPayment({
+          callback: async (response) => {
+            if (response.status === "successful") {
+              try {
+                const config = {
+                  headers: {
+                    Authorization: `Bearer ${user.token}`,
+                  },
+                };
+                await axios.put(
+                  `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/pay`,
+                  {
+                    id: response.transaction_id,
+                    status: response.status,
+                  },
+                  config
+                );
+                window.location.reload();
+              } catch (err) {
+                console.error("Error updating payment status:", err);
+                alert("Payment successful but order update failed. Please contact support.");
+              }
+            }
+            closePaymentModal();
+          },
+          onClose: () => {},
+        });
+      }}
+    >
+      PAY WITH FLUTTERWAVE
+    </button>
+  );
+};
 
 export default function OrderScreen() {
   const { id: orderId } = useParams();
@@ -135,56 +194,9 @@ export default function OrderScreen() {
             
             {/* ... (existing buttons) */}
             {!order.isPaid && (
-              /* ... Paystack Button logic ... */
               <div className="mt-8">
-                {!import.meta.env.VITE_PAYSTACK_PUBLIC_KEY ? (
-                  <div className="bg-red-900/20 border border-red-500/50 text-red-200 p-4 font-['Oswald'] text-xs uppercase tracking-widest">
-                    <p className="font-bold mb-1">Payment System Error:</p>
-                    Paystack Public Key is missing. Please add 
-                    <code className="bg-black/50 px-1 mx-1">VITE_PAYSTACK_PUBLIC_KEY</code> 
-                    to your <code className="bg-black/50 px-1">ONEMEN/.env</code> file.
-                  </div>
-                ) : (
-                  <PaystackButton
-                    className="w-full bg-[#09A5DB] text-white py-4 font-['Bebas_Neue'] tracking-widest text-lg hover:bg-[#0781ab] transition-colors"
-                    publicKey={import.meta.env.VITE_PAYSTACK_PUBLIC_KEY}
-                    email={user.email}
-                    amount={Math.round(order.totalPrice * 100)}
-                    currency="NGN"
-                    metadata={{
-                      name: user.name,
-                      order_id: order._id,
-                    }}
-                  text="PAY WITH PAYSTACK"
-                  onSuccess={(reference) => {
-                    const updatePayment = async () => {
-                      try {
-                        const config = {
-                          headers: {
-                            Authorization: `Bearer ${user.token}`,
-                          },
-                        };
-                        await axios.put(
-                          `${import.meta.env.VITE_API_URL}/api/orders/${order._id}/pay`,
-                          {
-                            id: reference.reference,
-                            status: reference.status,
-                            update_time: new Date().toISOString(),
-                            email_address: user.email,
-                          },
-                          config
-                        );
-                        window.location.reload();
-                      } catch (err) {
-                        console.error("Error updating payment status:", err);
-                      }
-                    };
-                    updatePayment();
-                  }}
-                  onClose={() => alert("Transaction was not completed")}
-                />
-              )}
-            </div>
+                <FlutterPaymentButton order={order} user={user} />
+              </div>
             )}
 
             {user && user.isAdmin && order.isPaid && (
